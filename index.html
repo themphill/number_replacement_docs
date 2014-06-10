@@ -21,11 +21,11 @@
 <h2>
 <a name="summary" class="anchor" href="#summary"><span class="octicon octicon-link"></span></a>Summary</h2>
 
-<p>By default, when SourceTrak loads on a page, it will replace all the numbers (that match the provided replacement number) it finds in the page title and the text of the page body, including "tel" links[^1] and title attributes. Number replacement only happens once, so any numbers added to the page afterwards will not be replaced. Numbers present in images, JavaScript, or in HTML (except as noted above) will also not be replaced.</p>
+<p>By default, when SourceTrak loads on a page, it will replace all the numbers (that match the provided replacement number) it finds in the page title and the text of the page body, including "tel" links* and title attributes. Number replacement only happens once, so any numbers added to the page afterwards will not be replaced. Numbers present in images, JavaScript, or in HTML (except as noted above) will also not be replaced.</p>
 
 <p>For use cases not covered by the default behavior, the SourceTrak number is made available in the SourceTrak JavaScript code running on the page. This allows customers to write their own JavaScript code that can access the number for custom use.</p>
 
-<p>[^1]: In HTML, a "tel" link is of the format <code>&lt;a href="tel:5555555555"&gt;&lt;/a&gt;</code>. The number "5555555555" would be replaced.</p>
+<p>*: In HTML, a "tel" link is of the format <code>&lt;a href="tel:5555555555"&gt;&lt;/a&gt;</code>. The number <code>5555555555</code> would be replaced.</p>
 
 <h2>
 <a name="technical-specification" class="anchor" href="#technical-specification"><span class="octicon octicon-link"></span></a>Technical Specification</h2>
@@ -217,14 +217,14 @@
 <li>
 <code>_st.getFormattedNumber()</code> - returns the SourceTrak number formatted as <code>(555) 555-5555</code>
 </li>
-</ul><p>Note that because the script is loaded asynchronously[^1], the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of <code>_st</code> before attempting to access the number.</p>
+</ul><p>Note that because the script is loaded asynchronously*, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of <code>_st</code> before attempting to access the number.</p>
 
 <h3>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h3>
 
 <p>SourceTrak is completely self-contained in the <code>_st</code> global object and has no external dependencies.</p>
 
-<p>[^1]: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.</p>
+<p>*: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.</p>
       </section>
     </div>
     <script src="javascripts/scale.fix.js"></script>
