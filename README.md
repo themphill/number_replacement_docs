@@ -6,7 +6,7 @@ By default, when SourceTrak loads on a page, it will replace all the numbers (th
 
 For use cases not covered by the default behavior, the SourceTrak number is made available in the SourceTrak JavaScript code running on the page. This allows customers to write their own JavaScript code that can access the number for custom use.
 
-*: In HTML, a "tel" link is of the format `<a href="tel:5555555555"></a>`. The number "5555555555" would be replaced.
+*: In HTML, a "tel" link is of the format `<a href="tel:5555555555"></a>`. The number `5555555555` would be replaced.
 
 ## Technical Specification
 
