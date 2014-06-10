@@ -50,7 +50,7 @@ Number replacement happens in four places:
 
 This sample page demonstrates each instance where a number will be replaced. In the SourceTrak application, we've set our Phone Number Replacement options as follows:
 
-![Number replacement options](https://gist.githubusercontent.com/themphill/37bf4d9c0fc0adeec748/raw/39d0a7a31773df8ae226a5aa12ebf1985533e425/img.png)
+![Number replacement options](https://raw.githubusercontent.com/themphill/number_replacement_docs/master/img.png)
 
 ```html
 <html>
