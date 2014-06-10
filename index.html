@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Number replacement docs by themphill</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Number replacement docs</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/themphill/number_replacement_docs">View the Project on GitHub <small>themphill/number_replacement_docs</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/themphill/number_replacement_docs/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/themphill/number_replacement_docs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/themphill/number_replacement_docs">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="sourcetrak-number-replacement" class="anchor" href="#sourcetrak-number-replacement"><span class="octicon octicon-link"></span></a>SourceTrak Number Replacement</h1>
+
+<h2>
+<a name="summary" class="anchor" href="#summary"><span class="octicon octicon-link"></span></a>Summary</h2>
+
+<p>By default, when SourceTrak loads on a page, it will replace all the numbers (that match the provided replacement number) it finds in the page title and the text of the page body, including "tel" links[^1] and title attributes. Number replacement only happens once, so any numbers added to the page afterwards will not be replaced. Numbers present in images, JavaScript, or in HTML (except as noted above) will also not be replaced.</p>
+
+<p>For use cases not covered by the default behavior, the SourceTrak number is made available in the SourceTrak JavaScript code running on the page. This allows customers to write their own JavaScript code that can access the number for custom use.</p>
+
+<p>[^1]: In HTML, a "tel" link is of the format <code>&lt;a href="tel:5555555555"&gt;&lt;/a&gt;</code>. The number "5555555555" would be replaced.</p>
+
+<h2>
+<a name="technical-specification" class="anchor" href="#technical-specification"><span class="octicon octicon-link"></span></a>Technical Specification</h2>
+
+<h3>
+<a name="number-replacement" class="anchor" href="#number-replacement"><span class="octicon octicon-link"></span></a>Number Replacement</h3>
+
+<p>SourceTrak number replacement begins with the snippet that has been added to a page. Unless you are using a tag manager, it is recommended to place the snippet before the closing <code>&lt;/body&gt;</code> tag: </p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+            <span class="c1">// your Ifbyphone public key is automatically included</span>
+            <span class="c1">// in the snippet shown in the SourceTrak application</span>
+            <span class="kd">var</span> <span class="nx">_stk</span> <span class="o">=</span> <span class="s2">"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0"</span><span class="p">;</span>
+
+            <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                <span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="nb">document</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"script"</span><span class="p">);</span> <span class="nx">b</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="p">;</span>
+                <span class="nx">b</span><span class="p">.</span><span class="nx">async</span><span class="o">=!</span><span class="mi">0</span><span class="p">;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="p">(</span><span class="s1">'https:'</span><span class="o">==</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">?</span> <span class="s1">'https://'</span> <span class="o">:</span>
+                <span class="s1">'http://'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'d31y97ze264gaa.cloudfront.net/assets/st/js/st.js'</span><span class="p">;</span>
+                <span class="nx">a</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"script"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span> <span class="nx">a</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="nx">a</span><span class="p">);</span>
+            <span class="p">})();</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<p>When the page loads, the snippet will fetch the SourceTrak JavaScript ("the script") from either the Ifbyphone servers or the browser’s cache. The script will then begin number replacement based on the phone number, class, or ID specified in the SourceTrak application.</p>
+
+<p>Number replacement happens in four places:</p>
+
+<ol>
+<li>
+<code>document.body</code> - All elements are searched and matching numbers found in the text of each element are replaced. This includes elements that are hidden or otherwise not visible.</li>
+<li>
+<code>&lt;title&gt;</code> - The page title, found in <code>&lt;head&gt;</code>, is searched and matching numbers are replaced</li>
+<li>title attributes - Title attributes on elements, e.g. <code>&lt;div title="(555) 555-5555"&gt;</code>, will be searched and have their numbers replaced</li>
+<li>tel links - Any anchor tag in the format <code>&lt;a href="tel:5555555555"&gt;</code> will be searched and have its matching tel number replaced. Numbers found in the actual content of the anchor tag are replaced in step 1.</li>
+</ol><h3>
+<a name="example-1" class="anchor" href="#example-1"><span class="octicon octicon-link"></span></a>Example 1</h3>
+
+<p>This sample page demonstrates each instance where a number will be replaced. In the SourceTrak application, we've set our Phone Number Replacement options as follows:</p>
+
+<p><img src="https://raw.githubusercontent.com/themphill/number_replacement_docs/master/img.png" alt="Number replacement options"></p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>(555) 555-0001<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"yourCustomClass"</span><span class="nt">&gt;</span>
+            This text will be replaced
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"yourCustomID"</span><span class="nt">&gt;</span>
+                This text will be replaced
+            <span class="nt">&lt;/span&gt;</span> 
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">"(555) 555-0001"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;div&gt;</span>
+            Give us a call at <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"tel:5555550001"</span><span class="nt">&gt;</span>(555) 555-0001<span class="nt">&lt;/a&gt;</span>!
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display:none;"</span><span class="nt">&gt;</span>
+            (555) 555-0001
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="c">&lt;!-- SourceTrak snippet at the end of the body --&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+            <span class="kd">var</span> <span class="nx">_stk</span> <span class="o">=</span> <span class="s2">"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0"</span><span class="p">;</span>
+
+            <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                <span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="nb">document</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"script"</span><span class="p">);</span> <span class="nx">b</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="p">;</span>
+                <span class="nx">b</span><span class="p">.</span><span class="nx">async</span><span class="o">=!</span><span class="mi">0</span><span class="p">;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="p">(</span><span class="s1">'https:'</span><span class="o">==</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">?</span> <span class="s1">'https://'</span> <span class="o">:</span>
+                <span class="s1">'http://'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'d31y97ze264gaa.cloudfront.net/assets/st/js/st.js'</span><span class="p">;</span>
+                <span class="nx">a</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"script"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span> <span class="nx">a</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="nx">a</span><span class="p">);</span>
+            <span class="p">})();</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<p>After number replacement, our page will look like this:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>(555) 555-9999<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"yourCustomClass"</span><span class="nt">&gt;</span>
+            (555) 555-9999
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"yourCustomID"</span><span class="nt">&gt;</span>
+                (555) 555-9999
+            <span class="nt">&lt;/span&gt;</span> 
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">"(555) 555-9999"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;div&gt;</span>
+            Give us a call at <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"tel:5555559999"</span><span class="nt">&gt;</span>(555) 555-9999<span class="nt">&lt;/a&gt;</span>!
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display:none;"</span><span class="nt">&gt;</span>
+            (555) 555-9999
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="c">&lt;!-- SourceTrak snippet at the end of the body --&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+            <span class="kd">var</span> <span class="nx">_stk</span> <span class="o">=</span> <span class="s2">"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0"</span><span class="p">;</span>
+
+            <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                <span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="nb">document</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"script"</span><span class="p">);</span> <span class="nx">b</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="p">;</span>
+                <span class="nx">b</span><span class="p">.</span><span class="nx">async</span><span class="o">=!</span><span class="mi">0</span><span class="p">;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="p">(</span><span class="s1">'https:'</span><span class="o">==</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">?</span> <span class="s1">'https://'</span> <span class="o">:</span>
+                <span class="s1">'http://'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'d31y97ze264gaa.cloudfront.net/assets/st/js/st.js'</span><span class="p">;</span>
+                <span class="nx">a</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"script"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span> <span class="nx">a</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="nx">a</span><span class="p">);</span>
+            <span class="p">})();</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<h3>
+<a name="caveats" class="anchor" href="#caveats"><span class="octicon octicon-link"></span></a>Caveats</h3>
+
+<p>Numbers in images, JavaScript, Flash, or attributes of HTML elements will NOT be replaced.</p>
+
+<p>The script only runs once; therefore, only numbers that are present in the document at the time the script executes will be replaced. Numbers added to the page after the script has executed will NOT be replaced.</p>
+
+<p>Numbers inside "template scripts", i.e. <code>&lt;script type="text/template"&gt;</code>, will NOT be replaced.</p>
+
+<h3>
+<a name="example-2" class="anchor" href="#example-2"><span class="octicon octicon-link"></span></a>Example 2</h3>
+
+<p>This example shows instances of numbers that will NOT be replaced:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">data-phone=</span><span class="s">"(555) 555-0001"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+            <span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="s1">'(555) 555-0001'</span><span class="p">;</span>
+        <span class="nt">&lt;/script&gt;</span>
+
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/template"</span><span class="nt">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+                <span class="p">(</span><span class="mi">555</span><span class="p">)</span> <span class="mi">555</span><span class="o">-</span><span class="mi">0001</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="nt">&lt;/script&gt;</span>
+
+        <span class="c">&lt;!-- SourceTrak snippet at the end of the body --&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+            <span class="kd">var</span> <span class="nx">_stk</span> <span class="o">=</span> <span class="s2">"a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0"</span><span class="p">;</span>
+
+            <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+                <span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="nb">document</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"script"</span><span class="p">);</span> <span class="nx">b</span><span class="p">.</span><span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="p">;</span>
+                <span class="nx">b</span><span class="p">.</span><span class="nx">async</span><span class="o">=!</span><span class="mi">0</span><span class="p">;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="p">(</span><span class="s1">'https:'</span><span class="o">==</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">?</span> <span class="s1">'https://'</span> <span class="o">:</span>
+                <span class="s1">'http://'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'d31y97ze264gaa.cloudfront.net/assets/st/js/st.js'</span><span class="p">;</span>
+                <span class="nx">a</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"script"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span> <span class="nx">a</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="nx">a</span><span class="p">);</span>
+            <span class="p">})();</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<h3>
+<a name="accessing-the-sourcetrak-number" class="anchor" href="#accessing-the-sourcetrak-number"><span class="octicon octicon-link"></span></a>Accessing the SourceTrak Number</h3>
+
+<p>To facilitate custom use, the script provides access to the SourceTrak number via the global variable <code>_st</code> and the following two functions:</p>
+
+<ul>
+<li>
+<code>_st.getNumber()</code> - returns the SourceTrak number as an unformatted string</li>
+<li>
+<code>_st.getFormattedNumber()</code> - returns the SourceTrak number formatted as <code>(555) 555-5555</code>
+</li>
+</ul><p>Note that because the script is loaded asynchronously[^1], the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of <code>_st</code> before attempting to access the number.</p>
+
+<h3>
+<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h3>
+
+<p>SourceTrak is completely self-contained in the <code>_st</code> global object and has no external dependencies.</p>
+
+<p>[^1]: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/themphill">themphill</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
