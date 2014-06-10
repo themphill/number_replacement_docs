@@ -2,11 +2,11 @@
 
 ## Summary
 
-By default, when SourceTrak loads on a page, it will replace all the numbers (that match the provided replacement number) it finds in the page title and the text of the page body, including "tel" links[^1] and title attributes. Number replacement only happens once, so any numbers added to the page afterwards will not be replaced. Numbers present in images, JavaScript, or in HTML (except as noted above) will also not be replaced.
+By default, when SourceTrak loads on a page, it will replace all the numbers (that match the provided replacement number) it finds in the page title and the text of the page body, including "tel" links* and title attributes. Number replacement only happens once, so any numbers added to the page afterwards will not be replaced. Numbers present in images, JavaScript, or in HTML (except as noted above) will also not be replaced.
 
 For use cases not covered by the default behavior, the SourceTrak number is made available in the SourceTrak JavaScript code running on the page. This allows customers to write their own JavaScript code that can access the number for custom use.
 
-[^1]: In HTML, a "tel" link is of the format `<a href="tel:5555555555"></a>`. The number "5555555555" would be replaced.
+*: In HTML, a "tel" link is of the format `<a href="tel:5555555555"></a>`. The number `5555555555` would be replaced.
 
 ## Technical Specification
 
@@ -191,11 +191,11 @@ To facilitate custom use, the script provides access to the SourceTrak number vi
 * `_st.getNumber()` - returns the SourceTrak number as an unformatted string
 * `_st.getFormattedNumber()` - returns the SourceTrak number formatted as `(555) 555-5555`
 
-Note that because the script is loaded asynchronously[^1], the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of `_st` before attempting to access the number.
+Note that because the script is loaded asynchronously*, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of `_st` before attempting to access the number.
 
 ### Dependencies
 
 SourceTrak is completely self-contained in the `_st` global object and has no external dependencies.
 
 
-[^1]: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.
+*: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.
