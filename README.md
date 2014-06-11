@@ -46,6 +46,30 @@ Number replacement happens in four places:
 3. title attributes - Title attributes on elements, e.g. `<div title="(555) 555-5555">`, will be searched and have their numbers replaced
 4. tel links - Any anchor tag in the format `<a href="tel:5555555555">` will be searched and have its matching tel number replaced. Numbers found in the actual content of the anchor tag are replaced in step 1.
 
+### Number Matching
+
+The script will match phone numbers in the following formats:
+
+```
+5554443333
+555 444 3333
+555-444-3333
+555.444.3333
+(555) 444 3333
+(555) 444-3333
+(555)-444-3333
+(555).444.3333
+
+15554443333
+1-555-444-3333
+1.555.444.3333
+1 (555) 444 3333
+1-(555)-444-3333
+1 (555)-444-3333
+1.(555).444.3333
+1 (555).444.3333
+```
+
 ### Example 1
 
 This sample page demonstrates each instance where a number will be replaced. In the SourceTrak application, we've set our Phone Number Replacement options as follows:
@@ -157,13 +181,16 @@ This example shows instances of numbers that will NOT be replaced:
 	</head>
 	
 	<body>
+		<!-- Numbers will not be replaced in attributes like data -->
 		<div data-phone="(555) 555-0001"></div>
 		
 		<script type="text/javascript">
+			// Numbers will not be replaced in JavaScript
 			var number = '(555) 555-0001';
 		</script>
 		
 		<script type="text/template">
+		    <!-- Numbers will not be replaced in template scripts -->
 		    <div>
 		        (555) 555-0001
 		    </div>
