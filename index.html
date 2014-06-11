@@ -14,6 +14,20 @@
   </head>
   <body>
     <div class="wrapper">
+      <header>
+        <h1>Number replacement docs</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/themphill/number_replacement_docs">View the Project on GitHub <small>themphill/number_replacement_docs</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/themphill/number_replacement_docs/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/themphill/number_replacement_docs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/themphill/number_replacement_docs">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
         <h1>
 <a name="sourcetrak-number-replacement" class="anchor" href="#sourcetrak-number-replacement"><span class="octicon octicon-link"></span></a>SourceTrak Number Replacement</h1>
 
@@ -24,7 +38,7 @@
 
 <p>For use cases not covered by the default behavior, the SourceTrak number is made available in the SourceTrak JavaScript code running on the page. This allows customers to write their own JavaScript code that can access the number for custom use.</p>
 
-<p>* In HTML, a "tel" link is of the format <code>&lt;a href="tel:5555555555"&gt;&lt;/a&gt;</code>. The number <code>5555555555</code> would be replaced.</p>
+<p>*: In HTML, a "tel" link is of the format <code>&lt;a href="tel:5555555555"&gt;&lt;/a&gt;</code>. The number <code>5555555555</code> would be replaced.</p>
 
 <h2>
 <a name="technical-specification" class="anchor" href="#technical-specification"><span class="octicon octicon-link"></span></a>Technical Specification</h2>
@@ -68,6 +82,30 @@
 <li>title attributes - Title attributes on elements, e.g. <code>&lt;div title="(555) 555-5555"&gt;</code>, will be searched and have their numbers replaced</li>
 <li>tel links - Any anchor tag in the format <code>&lt;a href="tel:5555555555"&gt;</code> will be searched and have its matching tel number replaced. Numbers found in the actual content of the anchor tag are replaced in step 1.</li>
 </ol><h3>
+<a name="number-matching" class="anchor" href="#number-matching"><span class="octicon octicon-link"></span></a>Number Matching</h3>
+
+<p>The script will match phone numbers in the following formats:</p>
+
+<pre><code>5554443333
+555 444 3333
+555-444-3333
+555.444.3333
+(555) 444 3333
+(555) 444-3333
+(555)-444-3333
+(555).444.3333
+
+15554443333
+1-555-444-3333
+1.555.444.3333
+1 (555) 444 3333
+1-(555)-444-3333
+1 (555)-444-3333
+1.(555).444.3333
+1 (555).444.3333
+</code></pre>
+
+<h3>
 <a name="example-1" class="anchor" href="#example-1"><span class="octicon octicon-link"></span></a>Example 1</h3>
 
 <p>This sample page demonstrates each instance where a number will be replaced. In the SourceTrak application, we've set our Phone Number Replacement options as follows:</p>
@@ -87,7 +125,7 @@
         <span class="nt">&lt;div&gt;</span>
             <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"yourCustomID"</span><span class="nt">&gt;</span>
                 This text will be replaced
-            <span class="nt">&lt;/span&gt;</span>
+            <span class="nt">&lt;/span&gt;</span> 
         <span class="nt">&lt;/div&gt;</span>
 
         <span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">"(555) 555-0001"</span> <span class="nt">/&gt;</span>
@@ -130,7 +168,7 @@
         <span class="nt">&lt;div&gt;</span>
             <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"yourCustomID"</span><span class="nt">&gt;</span>
                 (555) 555-9999
-            <span class="nt">&lt;/span&gt;</span>
+            <span class="nt">&lt;/span&gt;</span> 
         <span class="nt">&lt;/div&gt;</span>
 
         <span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">"(555) 555-9999"</span> <span class="nt">/&gt;</span>
@@ -178,13 +216,16 @@
     <span class="nt">&lt;/head&gt;</span>
 
     <span class="nt">&lt;body&gt;</span>
+        <span class="c">&lt;!-- Numbers will not be replaced in attributes like data --&gt;</span>
         <span class="nt">&lt;div</span> <span class="na">data-phone=</span><span class="s">"(555) 555-0001"</span><span class="nt">&gt;&lt;/div&gt;</span>
 
         <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+            <span class="c1">// Numbers will not be replaced in JavaScript</span>
             <span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="s1">'(555) 555-0001'</span><span class="p">;</span>
         <span class="nt">&lt;/script&gt;</span>
 
         <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/template"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--</span> <span class="nx">Numbers</span> <span class="nx">will</span> <span class="nx">not</span> <span class="nx">be</span> <span class="nx">replaced</span> <span class="k">in</span> <span class="nx">template</span> <span class="nx">scripts</span> <span class="o">--&gt;</span>
             <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
                 <span class="p">(</span><span class="mi">555</span><span class="p">)</span> <span class="mi">555</span><span class="o">-</span><span class="mi">0001</span>
             <span class="o">&lt;</span><span class="err">/div&gt;</span>
@@ -223,10 +264,14 @@
 
 <p>SourceTrak is completely self-contained in the <code>_st</code> global object and has no external dependencies.</p>
 
-<p>* It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.</p>
+<p>*: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.</p>
       </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/themphill">themphill</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-
+    
   </body>
 </html>
