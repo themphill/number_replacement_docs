@@ -70,6 +70,10 @@ The script will match phone numbers in the following formats:
 1 (555).444.3333
 ```
 
+The script will also match the format of each number it directly replaces. Numbers inserted by class or ID will default to the format `(555) 555-0001`.
+
+Format matching for number replacement can be disabled by setting the global variable `_st_format = false` before the script loads, causing the SourceTrak number to use the default format.
+
 ### Example 1
 
 This sample page demonstrates each instance where a number will be replaced. In the SourceTrak application, we've set our Phone Number Replacement options as follows:
@@ -79,7 +83,7 @@ This sample page demonstrates each instance where a number will be replaced. In 
 ```html
 <html>
 	<head>
-		<title>(555) 555-0001</title>
+		<title>555.555.0001</title>
 	</head>
 
 	<body>
@@ -96,7 +100,7 @@ This sample page demonstrates each instance where a number will be replaced. In 
 		<img title="(555) 555-0001" />
 
 		<div>
-			Give us a call at <a href="tel:5555550001">(555) 555-0001</a>!
+			Give us a call at <a href="tel:15555550001">1 555 555 0001</a>!
 		</div>
 
 		<div style="display:none;">
@@ -123,7 +127,7 @@ After number replacement, our page will look like this:
 ```html
 <html>
 	<head>
-		<title>(555) 555-9999</title>
+		<title>555.555.9999</title>
 	</head>
 
 	<body>
@@ -140,7 +144,7 @@ After number replacement, our page will look like this:
 		<img title="(555) 555-9999" />
 
 		<div>
-			Give us a call at <a href="tel:5555559999">(555) 555-9999</a>!
+			Give us a call at <a href="tel:15555559999">1 555 555 9999</a>!
 		</div>
 
 		<div style="display:none;">
@@ -216,13 +220,28 @@ This example shows instances of numbers that will NOT be replaced:
 To facilitate custom use, the script provides access to the SourceTrak number via the global variable `_st` and the following two functions:
 
 * `_st.getNumber()` - returns the SourceTrak number as an unformatted string
-* `_st.getFormattedNumber()` - returns the SourceTrak number formatted as `(555) 555-5555`
+* `_st.getFormattedNumber()` - returns the SourceTrak number with the specified or default formatting
 
-Note that because the script is loaded asynchronously*, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of `_st` before attempting to access the number.
+If `_st.getFormattedNumber()` is passed a phone number*, it will apply that format to the SourceTrak number, otherwise, it will use a default.
+
+```javascript
+_st.getNumber();
+//=> 5555559999
+
+_st.getFormattedNumber();
+//=> (555) 555-9999
+
+_st.getFormattedNumber('1 555.555.5555');
+//=> 1 555.555.9999
+```
+
+Note that because the script is loaded asynchronously**, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of `_st` before attempting to access the number.
 
 ### Dependencies
 
 SourceTrak is completely self-contained in the `_st` global object and has no external dependencies.
 
 
-*: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.
+*: The supplied phone number will only be used for formatting the SourceTrak number for that particular instance, and will not otherwise affect SourceTrak in any way.
+
+**: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.
