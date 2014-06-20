@@ -14,6 +14,19 @@
   </head>
   <body>
     <div class="wrapper">
+      <header>
+        <h1>Number replacement docs</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/themphill/number_replacement_docs">View the Project on GitHub <small>themphill/number_replacement_docs</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/themphill/number_replacement_docs/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/themphill/number_replacement_docs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/themphill/number_replacement_docs">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
       <section>
         <h1>
 <a name="sourcetrak-number-replacement" class="anchor" href="#sourcetrak-number-replacement"><span class="octicon octicon-link"></span></a>SourceTrak Number Replacement</h1>
@@ -25,7 +38,7 @@
 
 <p>For use cases not covered by the default behavior, the SourceTrak number is made available in the SourceTrak JavaScript code running on the page. This allows customers to write their own JavaScript code that can access the number for custom use.</p>
 
-<p>* In HTML, a "tel" link is of the format <code>&lt;a href="tel:5555555555"&gt;&lt;/a&gt;</code>. The number <code>5555555555</code> would be replaced.</p>
+<p>*: In HTML, a "tel" link is of the format <code>&lt;a href="tel:5555555555"&gt;&lt;/a&gt;</code>. The number <code>5555555555</code> would be replaced.</p>
 
 <h2>
 <a name="technical-specification" class="anchor" href="#technical-specification"><span class="octicon octicon-link"></span></a>Technical Specification</h2>
@@ -33,7 +46,7 @@
 <h3>
 <a name="number-replacement" class="anchor" href="#number-replacement"><span class="octicon octicon-link"></span></a>Number Replacement</h3>
 
-<p>SourceTrak number replacement begins with the snippet that has been added to a page. Unless you are using a tag manager, it is recommended to place the snippet before the closing <code>&lt;/body&gt;</code> tag: </p>
+<p>SourceTrak number replacement begins with the snippet that has been added to a page. Unless you are using a tag manager, it is recommended to place the snippet before the closing <code>&lt;/body&gt;</code> tag:</p>
 
 <div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
@@ -92,6 +105,10 @@
 1 (555).444.3333
 </code></pre>
 
+<p>The script will also match the format of each number it directly replaces. Numbers inserted by class or ID will default to the format <code>(555) 555-0001</code>.</p>
+
+<p>Format matching for number replacement can be disabled by setting the global variable <code>_st_format = false</code> before the script loads, causing the SourceTrak number to use the default format.</p>
+
 <h3>
 <a name="example-1" class="anchor" href="#example-1"><span class="octicon octicon-link"></span></a>Example 1</h3>
 
@@ -101,7 +118,7 @@
 
 <div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;title&gt;</span>(555) 555-0001<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;title&gt;</span>555.555.0001<span class="nt">&lt;/title&gt;</span>
     <span class="nt">&lt;/head&gt;</span>
 
     <span class="nt">&lt;body&gt;</span>
@@ -118,7 +135,7 @@
         <span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">"(555) 555-0001"</span> <span class="nt">/&gt;</span>
 
         <span class="nt">&lt;div&gt;</span>
-            Give us a call at <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"tel:5555550001"</span><span class="nt">&gt;</span>(555) 555-0001<span class="nt">&lt;/a&gt;</span>!
+            Give us a call at <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"tel:15555550001"</span><span class="nt">&gt;</span>1 555 555 0001<span class="nt">&lt;/a&gt;</span>!
         <span class="nt">&lt;/div&gt;</span>
 
         <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display:none;"</span><span class="nt">&gt;</span>
@@ -144,7 +161,7 @@
 
 <div class="highlight highlight-html"><pre><span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;title&gt;</span>(555) 555-9999<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;title&gt;</span>555.555.9999<span class="nt">&lt;/title&gt;</span>
     <span class="nt">&lt;/head&gt;</span>
 
     <span class="nt">&lt;body&gt;</span>
@@ -161,7 +178,7 @@
         <span class="nt">&lt;img</span> <span class="na">title=</span><span class="s">"(555) 555-9999"</span> <span class="nt">/&gt;</span>
 
         <span class="nt">&lt;div&gt;</span>
-            Give us a call at <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"tel:5555559999"</span><span class="nt">&gt;</span>(555) 555-9999<span class="nt">&lt;/a&gt;</span>!
+            Give us a call at <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"tel:15555559999"</span><span class="nt">&gt;</span>1 555 555 9999<span class="nt">&lt;/a&gt;</span>!
         <span class="nt">&lt;/div&gt;</span>
 
         <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display:none;"</span><span class="nt">&gt;</span>
@@ -242,19 +259,36 @@
 <li>
 <code>_st.getNumber()</code> - returns the SourceTrak number as an unformatted string</li>
 <li>
-<code>_st.getFormattedNumber()</code> - returns the SourceTrak number formatted as <code>(555) 555-5555</code>
-</li>
-</ul><p>Note that because the script is loaded asynchronously*, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of <code>_st</code> before attempting to access the number.</p>
+<code>_st.getFormattedNumber()</code> - returns the SourceTrak number with the specified or default formatting</li>
+</ul><p>If <code>_st.getFormattedNumber()</code> is passed a phone number*, it will apply that format to the SourceTrak number, otherwise, it will use a default.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">_st</span><span class="p">.</span><span class="nx">getNumber</span><span class="p">();</span>
+<span class="c1">//=&gt; 5555559999</span>
+
+<span class="nx">_st</span><span class="p">.</span><span class="nx">getFormattedNumber</span><span class="p">();</span>
+<span class="c1">//=&gt; (555) 555-9999</span>
+
+<span class="nx">_st</span><span class="p">.</span><span class="nx">getFormattedNumber</span><span class="p">(</span><span class="s1">'1 555.555.5555'</span><span class="p">);</span>
+<span class="c1">//=&gt; 1 555.555.9999</span>
+</pre></div>
+
+<p>Note that because the script is loaded asynchronously**, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of <code>_st</code> before attempting to access the number.</p>
 
 <h3>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h3>
 
 <p>SourceTrak is completely self-contained in the <code>_st</code> global object and has no external dependencies.</p>
 
-<p>* It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.</p>
+<p>*: The supplied phone number will only be used for formatting the SourceTrak number for that particular instance, and will not otherwise affect SourceTrak in any way.</p>
+
+<p>**: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.</p>
       </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/themphill">themphill</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-
+    
   </body>
 </html>
