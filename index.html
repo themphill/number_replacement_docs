@@ -259,7 +259,24 @@
 <span class="c1">//=&gt; 1 555.555.9999</span>
 </pre></div>
 
-<p>Note that because the script is loaded asynchronously**, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of <code>_st</code> before attempting to access the number.</p>
+<p>Because the script is loaded asynchronously**, the SourceTrak number will NOT be available at DOM ready. To assist custom code wishing to use the SourceTrak number, the script will fire the <code>_st_ready</code> custom DOM event once the SourceTrak number is available. For browsers that do not support custom DOM events (IE8 and older), the <code>_st.isReady()</code> method is provided for scripts to check via polling.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="c1">// native implementation</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'_st_ready'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">_st</span><span class="p">.</span><span class="nx">getNumber</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="c1">// it also works with jQuery</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'_st_ready'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">_st</span><span class="p">.</span><span class="nx">getFormattedNumber</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="c1">// checking the ready method after the script has loaded</span>
+<span class="nx">_st</span><span class="p">.</span><span class="nx">isReady</span><span class="p">();</span>
+<span class="c1">//=&gt; true</span>
+</pre></div>
+
+<p>Note that <code>_st_ready</code> does not send any additional information with the event.</p>
 
 <h3>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h3>
