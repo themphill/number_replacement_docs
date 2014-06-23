@@ -235,7 +235,25 @@ _st.getFormattedNumber('1 555.555.5555');
 //=> 1 555.555.9999
 ```
 
-Note that because the script is loaded asynchronously**, the SourceTrak number will not be available at DOM ready. Custom code wishing to use the SourceTrak number should check for the existence of `_st` before attempting to access the number.
+Because the script is loaded asynchronously**, the SourceTrak number will NOT be available at DOM ready. To assist custom code wishing to use the SourceTrak number, the script will fire the `_st_ready` custom DOM event once the SourceTrak number is available. For browsers that do not support custom DOM events (IE8 and older), the `_st.isReady()` method is provided for scripts to check via polling.
+
+```javascript
+// native implementation
+document.addEventListener('_st_ready', function () {
+	_st.getNumber();
+});
+
+// it also works with jQuery
+$(document).on('_st_ready', function () {
+    _st.getFormattedNumber();
+});
+
+// checking the ready method after the script has loaded
+_st.isReady();
+//=> true
+```
+
+Note that `_st_ready` does not send any additional information with the event.
 
 ### Dependencies
 
@@ -244,4 +262,4 @@ SourceTrak is completely self-contained in the `_st` global object and has no ex
 
 *: The supplied phone number will only be used for formatting the SourceTrak number for that particular instance, and will not otherwise affect SourceTrak in any way.
 
-**: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and not covered in this document.
+**: It is possible, though not recommended, to use SourceTrak synchronously. However, this is an advanced use case and is not covered in this document.
